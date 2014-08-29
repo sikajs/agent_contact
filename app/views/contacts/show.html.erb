@@ -3,6 +3,7 @@ Name: <%= @contact.name %><br/>
 Tel: <%= @contact.tel %><br/>
 Address: <%= @contact.address %><br/>
 
-<%= link_to "Edit", edit_contact_path(@contact) %>
-<%= link_to "Delete", contact_path(@contact), method: :delete, data: { :confirm => "Are you sure?" } %>
-<%= link_to "Back to list", contacts_path %>
+<%= link_to "Edit", edit_agent_contact_path(@agent, @contact) %>
+<%= link_to "Delete", agent_contact_path(@agent, @contact),
+                      method: :delete, data: { :confirm => "Are you sure?" } %>
+<%= link_to "Back to agent detail", agent_path(@agent) %>

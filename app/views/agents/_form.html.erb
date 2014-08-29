@@ -1,0 +1,18 @@
+<% if @agent.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @agent.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div id="agent_form">
+  <%= form_for @agent do |f| %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+    <%= f.submit %>
+  <% end %>
+</div>

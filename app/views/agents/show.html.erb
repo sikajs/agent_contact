@@ -1,0 +1,28 @@
+<h1>Agent <%= @agent.id %></h1>
+Name: <%= @agent.name %><br/>
+<%= link_to "Add new contact", new_agent_contact_path(@agent) %>
+<% if !@agent.contacts.empty? %>
+  <div id="default">
+    Default contact ~
+    <%= form_for(@agent, remote: true) do |f| %>
+      <%= select("agent", "default_contact",
+                 @agent.contacts.collect {|c| [ c.name, c.id ] },
+                 include_blank: "- - - - -", :selected => @agent.default_contact)  %>
+    <% end %>
+  </div><br/>
+  <div id="agent_contacts">
+    Contacts ~
+    <ul>
+      <% @agent.contacts.each do |contact| %>
+        <li>
+          <%= link_to contact.name, agent_contact_path(@agent,contact) %>
+          <%= contact.tel %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<br/>
+<%= link_to "Edit", edit_agent_path(@agent) %>
+<%= link_to "Delete", agent_path(@agent), method: :delete, data: { :confirm => "Are you sure?" } %>
+<%= link_to "Back to agent list", agents_path %>

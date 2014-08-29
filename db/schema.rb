@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829080236) do
+ActiveRecord::Schema.define(version: 20140829101825) do
+
+  create_table "agents", force: true do |t|
+    t.string   "name"
+    t.integer  "default_contact"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contacts", force: true do |t|
     t.string   "name"
@@ -19,6 +26,9 @@ ActiveRecord::Schema.define(version: 20140829080236) do
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "agent_id"
   end
+
+  add_index "contacts", ["agent_id"], name: "index_contacts_on_agent_id"
 
 end

@@ -1,23 +1,20 @@
 class ContactsController < ApplicationController
+  before_action :set_agent
   before_action :find_contact, only: [:show, :edit, :update, :destroy]
 
   def new
-    @contact = Contact.new
+    @contact = @agent.contacts.build
   end
 
   def create
-    @contact = Contact.new(contact_params)
+    @contact = @agent.contacts.build(contact_params)
     if @contact.save
       flash[:success] = "Contact has been created."
-      redirect_to @contact
+      redirect_to [@agent, @contact]
     else
       flash[:warning] = "Contact has not been created."
       render :new
     end
-  end
-
-  def index
-    @contacts = Contact.all
   end
 
   def show
@@ -29,7 +26,7 @@ class ContactsController < ApplicationController
   def update
     if @contact.update(contact_params)
       flash[:success] = "Contact has been updated."
-      redirect_to @contact
+      redirect_to [@agent, @contact]
     else
       flash[:warning] = "Contact has not been updated."
       render :edit
@@ -39,7 +36,7 @@ class ContactsController < ApplicationController
   def destroy
     @contact.destroy
     flash[:success] = "Contact has been deleted."
-    redirect_to contacts_path
+    redirect_to @agent
   end
 
   private
@@ -48,10 +45,14 @@ class ContactsController < ApplicationController
     end
 
     def find_contact
-      @contact = Contact.find(params[:id])
+      @contact = @agent.contacts.find(params[:id])
+    end
 
-    rescue ActiveRecord::RecordNotFound
-      flash[:warning] = "The contact you're looking for couldn't be found."
-      redirect_to contacts_path
+    def set_agent
+      @agent = Agent.find(params[:agent_id])
+
+      rescue ActiveRecord::RecordNotFound
+          flash[:warning] = "The agent you're looking for couldn't be found."
+          redirect_to root_path
     end
 end
