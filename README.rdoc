@@ -4,8 +4,6 @@ JCM Assessment for RoR Developer
 
 Q1
 
-* Ruby version
-2.1.2
+* Ruby version 2.1.2
 
-* Rails version
-4.1.5
+* Rails version 4.1.5
