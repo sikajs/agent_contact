@@ -1,0 +1,17 @@
+<div id="contact_form">
+  <%= form_for @contact do |f| %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :tel %>
+      <%= f.text_field :tel %>
+    </p>
+    <p>
+      <%= f.label :address %>
+      <%= f.text_field :address %>
+    </p>
+    <%= f.submit %>
+  <% end %>
+</div>
