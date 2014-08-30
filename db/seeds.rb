@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+  agent = Agent.create!(:name => "demo")
+  for i in 1..3
+    agent.contacts.create!(:name => "example#{i}", :tel => "0#{i}-12345678",
+                           :address => "台北市哈哈街#{i}號")
+  end
+  agent.update!(:default_contact => 1)
