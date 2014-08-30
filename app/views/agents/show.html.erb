@@ -4,19 +4,26 @@ Name: <%= @agent.name %><br/>
 <% if !@agent.contacts.empty? %>
   <div id="default">
     Default contact ~
-    <%= form_for(@agent, remote: true) do |f| %>
-      <%= select("agent", "default_contact",
-                 @agent.contacts.collect {|c| [ c.name, c.id ] },
-                 include_blank: "- - - - -", :selected => @agent.default_contact)  %>
+    <%= form_for(@agent, remote: true, :method => :patch) do |f| %>
+      <%= f.select(
+              :default_contact,
+              options_for_select(@agent.contacts.collect {|c| [ c.name, c.id ] },
+                                 @agent.default_contact),
+              { prompt: "Please select" },
+              { 'data-remote' => 'true', 'data-method' => 'patch'}
+      ) %>
+
     <% end %>
   </div><br/>
   <div id="agent_contacts">
     Contacts ~
     <ul>
       <% @agent.contacts.each do |contact| %>
-        <li>
+        <li class="contact <%= "default" if contact.id == @agent.default_contact %>"
+            id="<%= contact.id %>">
           <%= link_to contact.name, agent_contact_path(@agent,contact) %>
           <%= contact.tel %>
+
         </li>
       <% end %>
     </ul>

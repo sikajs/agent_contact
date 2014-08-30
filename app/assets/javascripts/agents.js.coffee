@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  $("select#agent_default_contact").on("change", (e) ->
-    alert $("select#agent_default_contact").val()
+  $("select#agent_default_contact").on("ajax:success", (e) ->
+    code = 'li#' + $(this).val()
+    $("li.contact").removeClass("default")
+    $(code).addClass("default")
   )

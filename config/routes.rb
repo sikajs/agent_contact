@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :agents do
+    patch "set_default"
     resources :contacts
   end
 

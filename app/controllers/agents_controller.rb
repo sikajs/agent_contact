@@ -1,5 +1,5 @@
 class AgentsController < ApplicationController
-  before_action :find_agent, only: [:show, :edit, :update, :destroy]
+  before_action :find_agent, only: [:show, :edit, :update, :destroy, :set_default]
 
   def new
     @agent = Agent.new
@@ -28,14 +28,14 @@ class AgentsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @agent.update(agent_params)
+      if @agent.update_attributes!(agent_params)
         #flash[:success] = "agent has been updated."
         format.html { redirect_to @agent, success: "agent has been updated." }
-        format.js {}
+        format.js { render nothing: true }
       else
         #flash[:warning] = "agent has not been updated."
         format.html { render :edit, warning: "agent has not been updated." }
-        format.js {}
+        format.js { render nothing: true }
       end
     end
   end
@@ -48,7 +48,7 @@ class AgentsController < ApplicationController
 
   private
     def agent_params
-      params.require(:agent).permit(:name, :tel, :address)
+      params.require(:agent).permit(:name, :default_contact)
     end
 
     def find_agent
@@ -56,6 +56,6 @@ class AgentsController < ApplicationController
 
     rescue ActiveRecord::RecordNotFound
       flash[:warning] = "The agent you're looking for couldn't be found."
-      redirect_to agents_path
+      redirect_to root_path
     end
 end
