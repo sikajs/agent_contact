@@ -1,35 +1,11 @@
 <h1>Agent <%= @agent.id %></h1>
 Name: <%= @agent.name %><br/>
 <%= link_to "Add new contact", new_agent_contact_path(@agent) %>
-<% if !@agent.contacts.empty? %>
-  <div id="default">
-    Default contact ~
-    <%= form_for(@agent, remote: true, :method => :patch) do |f| %>
-      <%= f.select(
-              :default_contact,
-              options_for_select(@agent.contacts.collect {|c| [ c.name, c.id ] },
-                                 @agent.default_contact),
-              { prompt: "Please select" },
-              { 'data-remote' => 'true', 'data-method' => 'patch'}
-      ) %>
 
-    <% end %>
-  </div><br/>
-  <div id="agent_contacts">
-    Contacts ~
-    <ul>
-      <% @agent.contacts.each do |contact| %>
-        <li class="contact <%= "default" if contact.id == @agent.default_contact %>"
-            id="<%= contact.id %>">
-          <%= link_to contact.name, agent_contact_path(@agent,contact) %>
-          <%= contact.tel %>
-
-        </li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= render "set_default" %>
 <br/>
+<%= render "show_contacts" %>
+
 <%= link_to "Edit", edit_agent_path(@agent) %>
 <%= link_to "Delete", agent_path(@agent), method: :delete, data: { :confirm => "Are you sure?" } %>
 <%= link_to "Back to agent list", agents_path %>

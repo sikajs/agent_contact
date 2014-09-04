@@ -1,5 +1,5 @@
 class AgentsController < ApplicationController
-  before_action :find_agent, only: [:show, :edit, :update, :destroy, :set_default]
+  before_action :find_agent, only: [:show, :edit, :update, :destroy]
 
   def new
     @agent = Agent.new
@@ -8,10 +8,10 @@ class AgentsController < ApplicationController
   def create
     @agent = Agent.new(agent_params)
     if @agent.save
-      flash[:success] = "agent has been created."
+      flash[:success] = "Agent has been created."
       redirect_to @agent
     else
-      flash[:warning] = "agent has not been created."
+      flash[:warning] = "Agent has not been created."
       render :new
     end
   end
@@ -21,21 +21,23 @@ class AgentsController < ApplicationController
   end
 
   def show
+    #binding.pry
   end
 
   def edit
   end
 
   def update
+    #binding.pry
     respond_to do |format|
       if @agent.update_attributes!(agent_params)
         #flash[:success] = "agent has been updated."
-        format.html { redirect_to @agent, success: "agent has been updated." }
-        format.js { render nothing: true }
+        format.html { redirect_to @agent, success: "Agent has been updated." }
+        format.json { render :json => @agent }
       else
         #flash[:warning] = "agent has not been updated."
-        format.html { render :edit, warning: "agent has not been updated." }
-        format.js { render nothing: true }
+        format.html { render :edit, warning: "Agent has not been updated." }
+        format.js { render :js => @agent.errors }
       end
     end
   end
@@ -53,7 +55,6 @@ class AgentsController < ApplicationController
 
     def find_agent
       @agent = Agent.find(params[:id])
-
     rescue ActiveRecord::RecordNotFound
       flash[:warning] = "The agent you're looking for couldn't be found."
       redirect_to root_path

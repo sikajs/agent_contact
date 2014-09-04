@@ -28,6 +28,16 @@ gem 'spring',        group: :development
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  gem 'pry'
+  gem 'awesome_print'
+  gem 'rspec-rails', '~> 2.99'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
+end
+
+group :test do
+  gem 'database_cleaner'
 end
 
 group :production do

@@ -1,0 +1,16 @@
+<!-- the select field seems won't be loaded correctly when just came from the agents list in the first place-->
+<% if @agent.contacts.any? %>
+  <div id="set_default">
+  <%= form_for(@agent, remote: true, :html => { :'data-type' => 'json' }) do |f| %>
+      <div class="errors"></div>
+      <%= f.label :default_contact %>
+      <%= f.select(
+              :default_contact,
+              options_for_select(@agent.contacts.collect {|c| [ c.name, c.id ] },
+              @agent.default_contact ),
+              { prompt: "Please select" }
+      ) %>
+    <% end %>
+  </div><br/>
+
+<% end %>

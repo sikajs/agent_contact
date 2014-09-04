@@ -1,0 +1,12 @@
+<div id="agent_contacts">
+  Contacts ~
+  <ul>
+    <% @agent.contacts.each do |contact| %>
+      <li class="contact <%= "default" if contact.id == @agent.default_contact %>"
+          id="<%= contact.id %>">
+        <%= link_to contact.name, agent_contact_path(@agent,contact) %>
+        <%= contact.tel %>
+      </li>
+    <% end %>
+  </ul>
+</div>
