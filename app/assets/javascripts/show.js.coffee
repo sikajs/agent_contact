@@ -1,9 +1,9 @@
 $(document).on "page:change", ->
   $("select#agent_default_contact").on("change", (e) ->
     #alert "called"
-    $(".edit_agent").submit()
+    $("form.edit_agent").submit()
   )
-  $(".edit_agent").on("ajax:success", (evt, data, status, xhr) ->
+  $("form.edit_agent").on("ajax:success", (evt, data, status, xhr) ->
     $("div.errors").html("Default contact setted.")
     #alert(data)
     code = 'li#' + data["default_contact"]
